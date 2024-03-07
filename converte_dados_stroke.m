@@ -1,4 +1,4 @@
-data = readtable('Train.csv');
+data = readtable('dataset/Train_original.csv');
 
 % Substitui texto por numeros para que rede neuronal consiga comprender
 data.gender = replace(data.gender, 'Male', "0");
@@ -16,4 +16,4 @@ data.smoking_status = replace(data.smoking_status, 'smokes', "2");
 data.smoking_status = replace(data.smoking_status, 'Unknown', "3");
 
 % Escrever a tabela de volta para um novo arquivo CSV
-writetable(data, 'Train_mod.csv');
+writetable(data, 'dataset/Train.csv', 'Delimiter', ';');
