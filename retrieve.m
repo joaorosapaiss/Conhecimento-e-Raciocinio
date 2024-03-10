@@ -2,8 +2,6 @@ function [retrieved_indexes, similarities, new_case] = retrieve(case_library, ne
 
     weighting_factors = [3 2 1 3 3 2 1 1 3 3];  % Adjust weighting factors as needed
     
-
-
     smoking_type_sim = get_smoking_status_similarities();
     %transportation_sim = get_transportation_similarities();
     %accommodation_sim = get_accommodation_similarities();
@@ -16,7 +14,7 @@ function [retrieved_indexes, similarities, new_case] = retrieve(case_library, ne
     lista ={'gender', 'age', 'hypertension','heart_disease' ,'ever_married', 'Residence_type', 'avg_glucose_level','bmi', 'smoking_status', 'stroke'}
     for i=1;i<length(lista);
           if ~isfield(new_case,lista(i))
-              weighting_factors(i) =0;
+              weighting_factors(i) = 0;
           end    
     end
 
