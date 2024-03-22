@@ -1,6 +1,6 @@
 function [retrieved_indexes, similarities, new_case] = retrieve(case_library, new_case, threshold)
 
-    weighting_factors = [3 2 1 3 3 2 1 1 3 3];  % Adjust weighting factors as needed
+    weighting_factors = [3 2 1 3 3 2 1 1 3];  % Adjust weighting factors as needed
     
     smoking_type_sim = get_smoking_status_similarities();
     %transportation_sim = get_transportation_similarities();
@@ -11,7 +11,7 @@ function [retrieved_indexes, similarities, new_case] = retrieve(case_library, ne
     retrieved_indexes = [];
     similarities = [];
 
-    lista ={'gender', 'age', 'hypertension','heart_disease' ,'ever_married', 'Residence_type', 'avg_glucose_level','bmi', 'smoking_status', 'stroke'}
+    lista ={'gender', 'age', 'hypertension','heart_disease' ,'ever_married', 'Residence_type', 'avg_glucose_level','bmi', 'smoking_status'}
     for i=1;i<length(lista);
           if ~isfield(new_case,lista(i))
               weighting_factors(i) = 0;
@@ -22,7 +22,7 @@ function [retrieved_indexes, similarities, new_case] = retrieve(case_library, ne
 
     
     for i=1:size(case_library,1)
-        distances = zeros(1,10);
+        distances = zeros(1,9);
 
         if isfield(new_case, 'gender')
             distances(1, 1) = calculate_linear_distance(case_library{i,'gender'} / max_values('gender'),new_case.gender / max_values('gender'));
@@ -61,9 +61,9 @@ function [retrieved_indexes, similarities, new_case] = retrieve(case_library, ne
             %distances(1, 9) = calculate_linear_distance(case_library{i, 'smoking_status'} / max_values('smoking_status'), new_case.smoking_status / max_values('smoking_status'));
         end
         
-        if isfield(new_case, 'stroke')
-            distances(1, 10) = calculate_linear_distance(case_library{i,'stroke'} / max_values('stroke'),new_case.stroke / max_values('stroke'));
-        end
+        %if isfield(new_case, 'stroke')
+         %   distances(1, 10) = calculate_linear_distance(case_library{i,'stroke'} / max_values('stroke'),new_case.stroke / max_values('stroke'));
+        %end
 
         DG = (distances * weighting_factors')/sum(weighting_factors);                     
         final_similarity = 1-DG;
@@ -80,7 +80,7 @@ end
 
 function [max_values] = get_max_values(case_library)
 
-    key_set = {'gender','age', 'hypertension', 'heart_disease','ever_married','Residence_type','avg_glucose_level','bmi','stroke'};
+    key_set = {'gender','age', 'hypertension', 'heart_disease','ever_married','Residence_type','avg_glucose_level','bmi'};
     value_set = {max(case_library{:,'gender'}),...
                  max(case_library{:,'age'}),...
                  max(case_library{:,'hypertension'}),...
@@ -88,8 +88,7 @@ function [max_values] = get_max_values(case_library)
                  max(case_library{:,'ever_married'}),...
                  max(case_library{:,'Residence_type'}),...
                  max(case_library{:,'avg_glucose_level'}),...
-                 max(case_library{:,'bmi'}),...
-                 max(case_library{:,'stroke'})};
+                 max(case_library{:,'bmi'})};
     max_values = containers.Map(key_set, value_set);
 end
 
