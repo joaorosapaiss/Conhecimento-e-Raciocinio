@@ -9,7 +9,7 @@ necessárias. Mais informações no ficheiro descrição_datasets.pdf
 b) ✅ (É coluna Stroke) Identifique qual o atributo que corresponderá à saída desejada (target) da rede neuronal. 
 Esta coluna possui alguns valores em falta identificados com NA.
 
-c) ❌ Implemente um sistema de raciocínio baseado em casos para preencher os atributos 
+c) ✅ Implemente um sistema de raciocínio baseado em casos para preencher os atributos 
 com valores em falta (NA). Implemente apenas a fase de RETRIEVE para encontrar o 
 caso mais semelhante àquele onde pretende o preenchimento e use os valores desse caso 
 para preencher os valores em falta
