@@ -20,6 +20,8 @@ function [] = cbr()
     new_case.smoking_status = '1';
     %new_case.stroke = 1;
 
+    %new_case = case_library(1, :);
+
     fprintf('\nStarting retrieve phase...\n\n');
     [retrieved_indexes, similarities, new_case] = retrieve(case_library, new_case, similarity_threshold);
     

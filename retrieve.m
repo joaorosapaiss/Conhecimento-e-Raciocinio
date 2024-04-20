@@ -1,6 +1,6 @@
 function [retrieved_indexes, similarities, new_case] = retrieve(case_library, new_case, threshold)
 
-    weighting_factors = [3 2 1 3 3 2 1 1 3];  % Adjust weighting factors as needed
+    weighting_factors = [0.3 0.2 0.1 0.3 0.3 0.2 0.1 0.1 0.3];  % Adjust weighting factors as needed
     
     smoking_type_sim = get_smoking_status_similarities();
     %transportation_sim = get_transportation_similarities();
@@ -62,7 +62,7 @@ function [retrieved_indexes, similarities, new_case] = retrieve(case_library, ne
         end
         
         %if isfield(new_case, 'stroke')
-         %   distances(1, 10) = calculate_linear_distance(case_library{i,'stroke'} / max_values('stroke'),new_case.stroke / max_values('stroke'));
+        %    distances(1, 10) = calculate_linear_distance(case_library{i,'stroke'} / max_values('stroke'),new_case.stroke / max_values('stroke'));
         %end
 
         DG = (distances * weighting_factors')/sum(weighting_factors);                     
@@ -73,8 +73,13 @@ function [retrieved_indexes, similarities, new_case] = retrieve(case_library, ne
             similarities = [similarities final_similarity];
         end
         
-       fprintf('Case %d out of %d has a similarity of %.2f%%...\n', i, size(case_library,1), final_similarity*100);
+       %fprintf('Case %d out of %d has a similarity of %.2f%%...\n', i, size(case_library,1), final_similarity*100);
     end
+
+    % Ordenar os resultados por similaridade
+    [similarities, sortIndex] = sort(similarities, 'descend');  % Ordena em ordem decrescente
+    retrieved_indexes = retrieved_indexes(sortIndex);  % Reordena os índices de acordo com as similaridades
+
 end
 
 
@@ -116,7 +121,7 @@ function [res] = calculate_linear_distance(val1, val2)
 end
 
 function [res] = calculate_euclidean_distance(val1, val2)
-    res = sqrt(val2-val2)^2;
+    res = sqrt((val2-val2)^2);
 end
 
 function [res] = calculate_haversine_distance(latlon1, latlon2)
