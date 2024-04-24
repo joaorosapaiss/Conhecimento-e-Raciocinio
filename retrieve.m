@@ -1,6 +1,6 @@
 function [most_similar_index, highest_similarity] = retrieve(case_library, new_case)
 
-    weighting_factors = [0.3 0.2 0.1 0.3 0.3 0.2 0.1 0.1 0.3];  % Adjust weighting factors as needed
+    weighting_factors = [1 1 1 1 1 1 1 1 1];  % Adjust weighting factors as needed
     
     smoking_type_sim = get_smoking_status_similarities();
     
