@@ -10,6 +10,7 @@ function [] = cbr()
     
     % New case data
     % new_case.holiday_type = 'Active';
+     
     new_case.gender = 0;
     new_case.age = 67;
     new_case.hypertension = 0;
@@ -18,6 +19,7 @@ function [] = cbr()
     new_case.avg_glucose_level = 228.69;
     new_case.bmi = 36.6;
     new_case.smoking_status = '1';
+    % 
     %new_case.stroke = 1;
 
     %new_case = case_library(1, :);

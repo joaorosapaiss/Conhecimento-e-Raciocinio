@@ -6,8 +6,6 @@ function stroke()
     input_matrix = data(:, 1:end-1);
     target = data(:, end)';
 
-  
-
     input_matrix = input_matrix';
 
     net = feedforwardnet(10);

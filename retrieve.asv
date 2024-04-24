@@ -1,4 +1,4 @@
-function [most_similar_index, highest_similarity] = retrieve(case_library, new_case)
+function [retrieved_indexe, most_similar_index] = retrieve(case_library, new_case)
 
     weighting_factors = [0.3 0.2 0.1 0.3 0.3 0.2 0.1 0.1 0.3];  % Adjust weighting factors as needed
     
@@ -67,7 +67,7 @@ function [most_similar_index, highest_similarity] = retrieve(case_library, new_c
             most_similar_index = i;
         end
         
-       %fprintf('Case %d out of %d has a similarity of %.2f%%...\n', i, size(case_library,1), final_similarity*100);
+       fprintf('Case %d out of %d has a similarity of %.2f%%...\n', i, size(case_library,1), final_similarity*100);
     end
 
     % Ordenar os resultados por similaridade
