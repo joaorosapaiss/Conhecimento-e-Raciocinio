@@ -9,26 +9,29 @@ function stroke()
     input_matrix = input_matrix';
 
     net = feedforwardnet(10);
-    net.layers{end}.transferFcn = 'tansig'; 
-    net.trainFcn = 'traingdx'; 
-    net.trainParam.epochs = 100;
+    net.trainFcn = 'trainlm'; 
+    net.layers{1}.transferFcn = 'tansig';
+    net.layers{2}.transferFcn = 'purelin';
+    %net.trainParam.epochs = 100;
+    net.divideFcn = 'dividetrain';
 
     net = train(net, input_matrix, target);
 
     % Visualizar a rede neural
     %view(net)
+    out = sim(net, input_matrix);
 
     % Fazer previsões com a rede treinada usando os propios dados do start
     % A partida acerta sempre visto que foi treinado com mesmo dados lol
-    teste1 = [1 0 67 0 1 1 1 228.69 36.6 1]; % devia dar 1 e da 1
-    teste2 = [8 0 53 0 0 1 1 211.03 34.2 1]; % devia dar 0 e da
-    teste2 = teste2';
-    y = sim(net,teste2);
-    y = (y >= 0.5);
+    % teste1 = [1 0 67 0 1 1 1 228.69 36.6 1]; % devia dar 1 e da 1
+    % teste2 = [8 0 53 0 0 1 1 211.03 34.2 1]; % devia dar 0 e da
+    % teste2 = teste2';
+    % y = sim(net,teste2);
+    % y = (y >= 0.5);
 
-    disp(y);
+    %disp(y);
     
-   erro = perform(net,target,y); 
+   erro = perform(net, out, target); 
    fprintf("Erro %f\n",erro);
    fprintf("Precisao %f\n", (1-erro) * 100)
    tempo_execucao = toc;
