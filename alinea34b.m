@@ -1,4 +1,4 @@
-data = readmatrix('dataset\Train_filled.csv', 'Delimiter', ',', 'DecimalSeparator', '.');
+data = readmatrix('dataset\Train_filled.csv', 'Delimiter', ';', 'DecimalSeparator', '.');
 
 % Separar os inputs e targets
 input_matrix = data(:, 1:end-1);
@@ -9,19 +9,19 @@ input_matrix = input_matrix';
 % Configurar para cada caso do Excel
 %net = feedforwardnet([10]);
 %net = feedforwardnet([5,5]);
-net = feedforwardnet([10,10]);
-%net = feedforwardnet([5,10,5]);
+%net = feedforwardnet([10,10]);
+net = feedforwardnet([5,10,5]);
 %net = feedforwardnet([10,10,10]);
 
 net.trainFcn = 'trainlm';
 net.layers{1}.transferFcn = 'logsig';
-%net.layers{2}.transferFcn = 'logsig';
-%net.layers{3}.transferFcn = 'logsig';
+net.layers{2}.transferFcn = 'logsig';
+net.layers{3}.transferFcn = 'logsig';
 net.layers{3}.transferFcn = 'purelin';
 
-net.divideParam.trainRatio = 0.7;
-net.divideParam.valRatio = 0.015;
-net.divideParam.testRatio = 0.015;
+net.divideParam.trainRatio = 0.9;
+net.divideParam.valRatio = 0.005;
+net.divideParam.testRatio = 0.005;
 
 sumGlobalAccuracy = 0;
 sumTestAccuracy = 0;
