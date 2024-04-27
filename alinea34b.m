@@ -34,13 +34,14 @@ numberOfRuns = 10;
 
 
 for k = 1:numberOfRuns 
+    net.trainParam.showWindow = false; % para nao exibir as janelas
     [net, tr] = train(net, input_matrix, targets);
     trainTime = tr.best_perf;
     sumTrainTime = sumTrainTime  + trainTime;
     out = sim(net, input_matrix);
 
-    plotconfusion(targets, out);
-    plotperf(tr);
+    %plotconfusion(targets, out);
+    %plotperf(tr);
    
  
     erro = perform(net, out, targets);
