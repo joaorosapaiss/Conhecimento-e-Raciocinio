@@ -9,27 +9,31 @@ function nn_train()
     input_matrix = input_matrix';
     
     % Configurar para cada caso do Excel
-    net = feedforwardnet([10]);
+    %net = feedforwardnet([10]);
     %net = feedforwardnet([5,5]);
-    %net = feedforwardnet([10,10]);
+    net = feedforwardnet([10,10]);
     %net = feedforwardnet([5,10,5]);
     %net = feedforwardnet([10,10,10]);
 
     net.trainFcn = 'trainlm';
-    net.layers{1}.transferFcn = 'tansig';
-    net.layers{2}.transferFcn = 'purelin';
-    %net.layers{3}.transferFcn = 'tansig';
-    %net.layers{4}.transferFcn = 'purelin';
+    net.layers{1}.transferFcn = 'logsig';
+    %net.layers{2}.transferFcn = 'logsig';
+    %net.layers{3}.transferFcn = 'logsig';
+    net.layers{3}.transferFcn = 'purelin';
     
-    net.divideParam.trainRatio = 0.4;
-    net.divideParam.valRatio = 0.2;
-    net.divideParam.testRatio = 0.4;
+    net.divideParam.trainRatio = 0.7;
+    net.divideParam.valRatio = 0.015;
+    net.divideParam.testRatio = 0.015;
  
     sumGlobalAccuracy = 0;
     sumTestAccuracy = 0;
+    bestGlobalAccuracy = 0;
+    bestTestAccuracy = 0;
     sumTrainTime = 0;
     sumTestTime = 0;
     numberOfRuns = 10; 
+
+
 
     for k = 1:numberOfRuns 
         [net, tr] = train(net, input_matrix, targets);
@@ -62,6 +66,13 @@ function nn_train()
         fprintf("Tempo de treino: %f\n", tr.best_perf);
         fprintf("Tempo de teste: %f\n", tr.best_tperf);
         fprintf('\n')
+
+        if globalAccuracy >= bestGlobalAccuracy
+            bestGlobalAccuracy = globalAccuracy;
+            bestTestAccuracy = testAccuracy;
+            bestNet = net;
+        end
+    
     end
 
     fprintf('Media precisao global %.2f\n', sumGlobalAccuracy / numberOfRuns);
@@ -69,10 +80,8 @@ function nn_train()
     fprintf("Media de tempo para o treino: %f\n", sumTrainTime / numberOfRuns);
     fprintf("Media de tempo para o teste: %f\n", sumTestTime / numberOfRuns);
 
-
-
+    fprintf("A Melhor precisao global %.2f\n",bestGlobalAccuracy);
+    fprintf("A Melhor precisao teste %.2f\n",bestTestAccuracy);
+    save('best.mat', 'bestNet');
    
-    
-    
-
 end
