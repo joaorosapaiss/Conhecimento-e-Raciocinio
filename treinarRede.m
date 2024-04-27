@@ -49,6 +49,7 @@ function treinarRede(app)
     numberOfRuns = 10; 
 
     for k = 1:numberOfRuns 
+        net.trainParam.showWindow = false; % para nao exibir as janelas
         [net, tr] = train(net, input_matrix, targets);
         trainTime = tr.best_perf;
         sumTrainTime = sumTrainTime  + trainTime;
@@ -84,10 +85,9 @@ function treinarRede(app)
     % Atualizar a interface com os resultados
     app.OutputTextArea.Value = sprintf(['Média precisão global: %.2f\n' ...
         'Média precisão teste: %.2f\n' ...
-        'Média tempo de treino: %.2f segundos'], ...
+        'Média tempo de treino: %.4f segundos'], ...
            sumGlobalAccuracy / numberOfRuns, ...
            sumTestAccuracy / numberOfRuns, ...
            sumTrainTime / numberOfRuns);
-
 
 end

@@ -64,4 +64,4 @@ end
 
 fprintf('Media precisao global %.2f\n', sumGlobalAccuracy / numberOfRuns);
 fprintf('Media precisao teste %.2f\n', sumTestAccuracy / numberOfRuns);
-fprintf("Media de tempo para o treino: %f segundos\n", sumTrainTime / numberOfRuns);
+fprintf("Media de tempo para o treino: %.4f segundos\n", sumTrainTime / numberOfRuns);
