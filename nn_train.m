@@ -21,9 +21,9 @@ function nn_train()
     %net.layers{3}.transferFcn = 'tansig';
     %net.layers{4}.transferFcn = 'purelin';
     
-    net.divideParam.trainRatio = 0.75;
-    net.divideParam.valRatio = 0.15;
-    net.divideParam.testRatio = 0.15;
+    net.divideParam.trainRatio = 0.4;
+    net.divideParam.valRatio = 0.2;
+    net.divideParam.testRatio = 0.4;
  
     sumGlobalAccuracy = 0;
     sumTestAccuracy = 0;
@@ -66,8 +66,8 @@ function nn_train()
 
     fprintf('Media precisao global %.2f\n', sumGlobalAccuracy / numberOfRuns);
     fprintf('Media precisao teste %.2f\n', sumTestAccuracy / numberOfRuns);
-    fprintf("Media de tempo para o treino: %f segundos\n", sumTrainTime / numberOfRuns);
- 
+    fprintf("Media de tempo para o treino: %f\n", sumTrainTime / numberOfRuns);
+    fprintf("Media de tempo para o teste: %f\n", sumTestTime / numberOfRuns);
 
 
 
