@@ -2,7 +2,7 @@ tic;
 data = readmatrix('dataset\Start.csv', 'Delimiter', ';', 'DecimalSeparator', '.');
 
 % Separar os inputs e targets
-input_matrix = data(:, 1:end-1);
+input_matrix = data(:, 2:end-1);
 target = data(:, end)';
 
 input_matrix = input_matrix';
@@ -28,4 +28,4 @@ fprintf("Precisao %f\n", (1-erro) * 100)
 tempo_execucao = toc;
 fprintf("Tempo de execução: %f segundos\n", tempo_execucao);
 
-save('nn_stroke.mat','net');
+%save('nn_stroke.mat','net');

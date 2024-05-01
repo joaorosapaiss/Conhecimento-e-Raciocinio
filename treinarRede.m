@@ -15,7 +15,7 @@ function treinarRede(app)
     data = readmatrix(datasetPath, 'Delimiter', ';', 'DecimalSeparator', '.');
     
     % Separar os inputs e targets
-    input_matrix = data(:, 1:end-1);
+    input_matrix = data(:, 2:end-1);
     targets = data(:, end)';
 
     input_matrix = input_matrix';
