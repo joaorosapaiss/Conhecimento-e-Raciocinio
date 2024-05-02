@@ -7,21 +7,23 @@ targets = data(:, end)';
 input_matrix = input_matrix';
 
 % Configurar para cada caso do Excel
-%net = feedforwardnet([10]);
+net = feedforwardnet(10);
 %net = feedforwardnet([5,5]);
 %net = feedforwardnet([10,10]);
-net = feedforwardnet([5,10,5]);
+% net = feedforwardnet([5,10,5]);
 %net = feedforwardnet([10,10,10]);
 
 net.trainFcn = 'trainlm';
+% net.layers{1}.transferFcn = 'tansig';
+% net.layers{2}.transferFcn = 'tansig';
+% net.layers{3}.transferFcn = 'tansig';
+% net.layers{4}.transferFcn = 'purelin';
 net.layers{1}.transferFcn = 'tansig';
-net.layers{2}.transferFcn = 'tansig';
-net.layers{3}.transferFcn = 'tansig';
-net.layers{4}.transferFcn = 'purelin';
+net.layers{2}.transferFcn = 'purelin';
 
-net.divideParam.trainRatio = 0.9;
-net.divideParam.valRatio = 0.05;
-net.divideParam.testRatio = 0.05;
+net.divideParam.trainRatio = 0.7;
+net.divideParam.valRatio = 0.15;
+net.divideParam.testRatio = 0.15;
 
 sumGlobalAccuracy = 0;
 sumTestAccuracy = 0;
