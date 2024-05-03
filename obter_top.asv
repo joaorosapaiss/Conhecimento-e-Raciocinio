@@ -7,20 +7,20 @@ targets = data(:, end)';
 input_matrix = input_matrix';
 
 % Configurar para cada caso do Excel
-%net = feedforwardnet(10);
+% net = feedforwardnet(10);
 %net = feedforwardnet([5,5]);
-net = feedforwardnet([10,10]);
+%net = feedforwardnet([10,10]);
 % net = feedforwardnet([5,10,5]);
 %net = feedforwardnet([10,10,10]);
+net = feedforwardnet([10, 10, 10, 10, 10]);
 
 net.trainFcn = 'trainlm';
-% net.layers{1}.transferFcn = 'tansig';
-% net.layers{2}.transferFcn = 'tansig';
-% net.layers{3}.transferFcn = 'tansig';
-% net.layers{4}.transferFcn = 'purelin';
-net.layers{1}.transferFcn = 'logsig';
-net.layers{2}.transferFcn = 'logsig';
-net.layers{3}.transferFcn = 'purelin';
+ net.layers{1}.transferFcn = 'logsig';
+ net.layers{2}.transferFcn = 'logsig';
+ net.layers{3}.transferFcn = 'tansig';
+net.layers{4}.transferFcn = 'tansig';
+net.layers{5}.transferFcn = 'tansig';
+net.layers{6}.transferFcn = 'purelin';
 
 net.divideParam.trainRatio = 0.9;
 net.divideParam.valRatio = 0.05;
@@ -32,7 +32,7 @@ bestGlobalAccuracy = 0;
 bestTestAccuracy = 0;
 sumTrainTime = 0;
 sumTestTime = 0;
-numberOfRuns = 100; 
+numberOfRuns = 20; 
 
 
 
@@ -69,20 +69,22 @@ for k = 1:numberOfRuns
     fprintf("Tempo de teste: %f\n", tr.best_tperf);
     fprintf('\n')
 
-    %if globalAccuracy >= bestGlobalAccuracy
-      %  bestGlobalAccuracy = globalAccuracy;
-     %   bestTestAccuracy = testAccuracy;
-        % bestNet = net;
-    %end
+    if globalAccuracy >= bestGlobalAccuracy
+        bestGlobalAccuracy = globalAccuracy;
+        bestTestAccuracy = testAccuracy;
+        bestTrainTime = tr.best_perf;
+        bestTestTime = tr.best_tperf;
+        bestNet = net;
+    end
 
 end
 
-fprintf('Media precisao global %.2f\n', sumGlobalAccuracy / numberOfRuns);
-fprintf('Media precisao teste %.2f\n', sumTestAccuracy / numberOfRuns);
-fprintf("Media de tempo para o treino: %f\n", sumTrainTime / numberOfRuns);
-fprintf("Media de tempo para o teste: %f\n", sumTestTime / numberOfRuns);
-
+resultsTable = table({sprintf('bestNet.mat')}, bestGlobalAccuracy, bestTestAccuracy, bestTrainTime, bestTestTime, ...
+                     'VariableNames', {'Rede', 'Precisao_Global', 'Precisao_Teste', 'Tempo_Treino', 'Tempo_Teste'});
+                 
+disp(resultsTable);
 %fprintf("A Melhor precisao global %.2f\n",bestGlobalAccuracy);
 %fprintf("A Melhor precisao teste %.2f\n",bestTestAccuracy);
-%bestNet = net;
-%save('redes/best2.mat', 'net');
+net = bestNet;
+save('redes/best1.mat', 'net');
+% writetable(resultsTable, 'redes/resultsTable.csv');
