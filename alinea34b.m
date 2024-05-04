@@ -69,11 +69,13 @@ for k = 1:numberOfRuns
     fprintf("Tempo de teste: %f\n", tr.best_tperf);
     fprintf('\n')
 
-    %if globalAccuracy >= bestGlobalAccuracy
-      %  bestGlobalAccuracy = globalAccuracy;
-     %   bestTestAccuracy = testAccuracy;
-        % bestNet = net;
-    %end
+    if globalAccuracy >= bestGlobalAccuracy
+        bestGlobalAccuracy = globalAccuracy;
+        bestTestAccuracy = testAccuracy;
+        bestTrainTime = tr.best_perf;
+        bestTestTime = tr.best_tperf;
+        bestNet = net;
+    end
 
 end
 
@@ -82,7 +84,11 @@ fprintf('Media precisao teste %.2f\n', sumTestAccuracy / numberOfRuns);
 fprintf("Media de tempo para o treino: %f\n", sumTrainTime / numberOfRuns);
 fprintf("Media de tempo para o teste: %f\n", sumTestTime / numberOfRuns);
 
-%fprintf("A Melhor precisao global %.2f\n",bestGlobalAccuracy);
-%fprintf("A Melhor precisao teste %.2f\n",bestTestAccuracy);
-%bestNet = net;
-%save('redes/best2.mat', 'net');
+% Contar arquivos .mat no diretório 'redes' e determinar o próximo índice
+files = dir(fullfile('redes', '*.mat'));
+nextIndex = length(files) + 1;
+
+net = bestNet;
+% Salvar cada rede treinada com um índice único
+filename = sprintf('redes/network_%d.mat', nextIndex);
+% save(filename, 'net', 'bestGlobalAccuracy', 'bestTestAccuracy', 'bestTrainTime', 'bestTestTime');
