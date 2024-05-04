@@ -1,5 +1,4 @@
 function treinarRede(app)
-
     fich = app.DatasetDropDown.Value;
 
     switch fich
@@ -46,9 +45,11 @@ function treinarRede(app)
     sumTestAccuracy = 0;
     sumTrainTime = 0;
     sumTestTime = 0;
-    numberOfRuns = 100; 
+    numberOfRuns = 1;%app.NumerodeExecuesEditField.Value; 
 
     % app.OutputTextArea.Value = 'A treinar...';
+    bestNet = [];
+    bestGlobalAccuracy = 0;
 
     for k = 1:numberOfRuns 
         net.trainParam.showWindow = false; % para nao exibir as janelas
@@ -82,6 +83,12 @@ function treinarRede(app)
         %fprintf("Tempo de treino: %f\n", tr.best_perf);
         %fprintf("Tempo de teste: %f\n", tr.best_tperf);
         %fprintf('\n')
+
+        if globalAccuracy >= bestGlobalAccuracy
+            bestGlobalAccuracy = globalAccuracy;
+            bestNet = net;
+        end
+
     end
 
     % Atualizar a interface com os resultados
@@ -89,9 +96,12 @@ function treinarRede(app)
         'Média precisão teste: %.2f\n' ...
         'Média tempo de treino: %.4f segundos\n'...
         'Média tempo de teste: %.4f segundos'], ...
+        'Melhor precisão global %.2f', ...
            sumGlobalAccuracy / numberOfRuns, ...
            sumTestAccuracy / numberOfRuns, ...
            sumTrainTime / numberOfRuns, ...
-           sumTestTime / numberOfRuns);
+           sumTestTime / numberOfRuns, ...
+           bestGlobalAccuracy);
 
+    app.gRedeTreinada = bestNet;
 end
