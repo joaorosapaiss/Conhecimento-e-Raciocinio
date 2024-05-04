@@ -9,17 +9,17 @@ input_matrix = input_matrix';
 % Configurar para cada caso do Excel
 % net = feedforwardnet(10);
 %net = feedforwardnet([5,5]);
-%net = feedforwardnet([10,10]);
-net = feedforwardnet([5,10,5]);
+net = feedforwardnet([10,10]);
+% net = feedforwardnet([5,10,5]);
 % net = feedforwardnet([10,10,10]);
 %net = feedforwardnet([10, 10, 10, 10]);
 
 net.trainFcn = 'trainlm';
 net.layers{1}.transferFcn = 'logsig';
 net.layers{2}.transferFcn = 'logsig';
-net.layers{3}.transferFcn = 'logsig';
-net.layers{4}.transferFcn = 'purelin';
-%net.layers{5}.transferFcn = 'purelin';
+net.layers{3}.transferFcn = 'purelin';
+% net.layers{4}.transferFcn = 'purelin';
+% net.layers{5}.transferFcn = 'purelin';
 % net.layers{6}.transferFcn = 'purelin';
 
 net.divideParam.trainRatio = 0.9;
@@ -83,8 +83,9 @@ resultsTable = table({sprintf('bestNet.mat')}, bestGlobalAccuracy, bestTestAccur
                      'VariableNames', {'Rede', 'Precisao_Global', 'Precisao_Teste', 'Tempo_Treino', 'Tempo_Teste'});
                  
 disp(resultsTable);
-%fprintf("A Melhor precisao global %.2f\n",bestGlobalAccuracy);
-%fprintf("A Melhor precisao teste %.2f\n",bestTestAccuracy);
+% fprintf("A Melhor precisao global %.2f\n",bestGlobalAccuracy);
+% fprintf("A Melhor precisao teste %.2f\n",bestTestAccuracy);
 net = bestNet;
-save('redes/best4.mat', 'net');
+% save('bestNetWithAccuracy.mat', 'net', 'bestGlobalAccuracy');
+%save('redes/best4.mat', 'net');
 % writetable(resultsTable, 'redes/resultsTable.csv');
