@@ -28,8 +28,8 @@ results = struct();
 for netName = fieldnames(nets)'
     net = nets.(netName{1});
     outputs = sim(net, input_matrix);
-    disp(outputs);
-    norm_output = outputs > 0.5;
+    norm_output = mapminmax(output,0,1);
+    norm_output = norm_output > 0.5;
     results.(netName{1}).outputs = outputs;
     results.(netName{1}).norm_outputs = norm_output;
     results.(netName{1}).accuracy = sum(norm_output == targets) / length(targets) * 100;
