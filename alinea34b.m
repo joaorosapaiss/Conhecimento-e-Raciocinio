@@ -3,24 +3,23 @@ data = readmatrix('dataset\Train_filled.csv', 'Delimiter', ';', 'DecimalSeparato
 % Separar os inputs e targets
 input_matrix = data(:, 2:end-1);
 targets = data(:, end)';
-
 input_matrix = input_matrix';
-
+%disp(input_matrix);
 % Configurar para cada caso do Excel
-%net = feedforwardnet(10);
+net = feedforwardnet(10);
 %net = feedforwardnet([5,5]);
-net = feedforwardnet([10,10]);
+% net = feedforwardnet([10,10]);
 % net = feedforwardnet([5,10,5]);
-%net = feedforwardnet([10,10,10]);
+% net = feedforwardnet([10,10,10]);
 
 net.trainFcn = 'trainlm';
-% net.layers{1}.transferFcn = 'tansig';
-% net.layers{2}.transferFcn = 'tansig';
+net.layers{1}.transferFcn = 'tansig';
+net.layers{2}.transferFcn = 'purelin';
 % net.layers{3}.transferFcn = 'tansig';
 % net.layers{4}.transferFcn = 'purelin';
-net.layers{1}.transferFcn = 'logsig';
-net.layers{2}.transferFcn = 'logsig';
-net.layers{3}.transferFcn = 'purelin';
+% net.layers{1}.transferFcn = 'logsig';
+% net.layers{2}.transferFcn = 'logsig';
+% net.layers{3}.transferFcn = 'purelin';
 
 net.divideParam.trainRatio = 0.9;
 net.divideParam.valRatio = 0.05;
@@ -32,7 +31,7 @@ bestGlobalAccuracy = 0;
 bestTestAccuracy = 0;
 sumTrainTime = 0;
 sumTestTime = 0;
-numberOfRuns = 100; 
+numberOfRuns = 30; 
 
 
 
@@ -42,12 +41,14 @@ for k = 1:numberOfRuns
     trainTime = tr.best_perf;
     sumTrainTime = sumTrainTime  + trainTime;
     out = sim(net, input_matrix);
-
     %plotconfusion(targets, out);
     %plotperf(tr);
    
+    out_norm = mapminmax(out, 0, 1);
+
+    out_norm = out_norm >= 0.5;
  
-    erro = perform(net, out, targets);
+    erro = perform(net, out_norm, targets);
     globalAccuracy = (1-erro) * 100;
     sumGlobalAccuracy = sumGlobalAccuracy + globalAccuracy;
 
@@ -56,11 +57,10 @@ for k = 1:numberOfRuns
     TTargets = targets(:, tr.testInd);
 
     out = sim(net, TInput);
-    out = mapminmax(output,0,1);
-    out = (out >= 0.5);
+    out_norm = mapminmax(out, 0, 1);
+    out_norm = out_norm >= 0.5;
 
-
-    erro = perform(net, out, TTargets);
+    erro = perform(net, out_norm, TTargets);
     testAccuracy = (1-erro) * 100;
     sumTestAccuracy = sumTestAccuracy + testAccuracy;
     
