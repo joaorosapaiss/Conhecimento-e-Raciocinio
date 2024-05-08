@@ -8,15 +8,16 @@ if isempty(files)
 end
 
 % Inicializar variáveis para armazenar as melhores redes como um array de estruturas vazio
-bestNetworks = struct('file', {}, 'accuracy', {});
+bestNetworks = struct('file', {}, 'combinedAccuracy', {});
 
 for i = 1:length(files)
     % Carregar cada rede e sua precisão global
     data = load(fullfile(folder, files(i).name));
-    if isfield(data, 'bestGlobalAccuracy')
-        currentAccuracy = data.bestGlobalAccuracy;
+    if isfield(data, 'bestGlobalAccuracy') && isfield(data, 'bestTestAccuracy')
+        % Calcular precisão combinada
+        combinedAccuracy = 0.7 * data.bestGlobalAccuracy + 0.3 * data.bestTestAccuracy;
         % Adicionar nova estrutura ao array de estruturas existente
-        bestNetworks(end+1) = struct('file', files(i).name, 'accuracy', currentAccuracy);
+        bestNetworks(end+1) = struct('file', files(i).name, 'combinedAccuracy', combinedAccuracy);
     end
 end
 
@@ -24,15 +25,15 @@ if isempty(bestNetworks)
     error('Nenhuma precisão global encontrada nos arquivos.');
 end
 
-% Ordenar as redes pela precisão global, do maior para o menor
-[~, idx] = sort([bestNetworks.accuracy], 'descend');
+% Ordenar as redes pela precisão combinada, do maior para o menor
+[~, idx] = sort([bestNetworks.combinedAccuracy], 'descend');
 bestNetworks = bestNetworks(idx);
 
 % Selecionar os três melhores, se houver suficientes
 numTopNetworks = min(3, numel(bestNetworks));
 topNetworks = bestNetworks(1:numTopNetworks);
 
-% Opcional: remover arquivos que não estão no top 3
+% remover arquivos que não estão no top 3
 for i = 1:length(files)
     if ~ismember(files(i).name, {topNetworks.file})
         delete(fullfile(folder, files(i).name)); % Descomente para deletar
@@ -51,5 +52,5 @@ end
 
 % Mostrar os resultados dos três melhores
 disp({topNetworks.file});
-disp([topNetworks.accuracy]);
+disp([topNetworks.combinedAccuracy]);
 

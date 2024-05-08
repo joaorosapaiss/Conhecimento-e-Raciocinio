@@ -11,7 +11,6 @@ net = feedforwardnet(10);
 net.trainFcn = 'trainlm'; 
 net.layers{1}.transferFcn = 'tansig';
 net.layers{2}.transferFcn = 'purelin';
-%net.trainParam.epochs = 100;
 net.divideFcn = 'dividetrain';
 
 net = train(net, input_matrix, target);
@@ -19,7 +18,8 @@ net = train(net, input_matrix, target);
 % Visualizar a rede neural
 %view(net)
 out = sim(net, input_matrix);
-
+out_norm = mapminmax(out, 0, 1);
+out_norm = out_norm >= 0.5;
 
 
 erro = perform(net, out, target); 

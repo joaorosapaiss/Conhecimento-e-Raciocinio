@@ -1,7 +1,7 @@
 % Supondo que os dados possam ter um delimitador específico como ';' e tratando dados ausentes
 filename = 'dataset/Train.csv';
 delimiter = ';';
-formatSpec = '%f %f %f %f %f %f %f %f %f %C %f ';
+formatSpec = '%f %f %f %f %f %f %f %f %f %f %f ';
 
 data = readtable(filename, 'Delimiter', delimiter, 'Format', formatSpec);
 
@@ -44,13 +44,11 @@ disp(incomplete_data);
 
 % Juntar os datasets completos e incompletos novamente
 combined_data = [complete_data; incomplete_data];
-%combined_data = sortrows(combined_data, "id");
+combined_data = sortrows(combined_data, "id");
 
 % Salvar o novo dataset completo
-%writetable(combined_data, 'dataset\Train_filled.csv', 'Delimiter', ';');
+writetable(combined_data, 'dataset\Train_filled.csv', 'Delimiter', ';');
 
-combined_data = sortrows(combined_data, "age");
-writetable(combined_data, 'dataset\Train_filled2.csv', 'Delimiter', ';');
 % Imprimir o dataset combinado após as alterações
 %disp(combined_data);
-%disp(incomplete_data);
+disp(incomplete_data);

@@ -28,6 +28,7 @@ results = struct();
 for netName = fieldnames(nets)'
     net = nets.(netName{1});
     outputs = sim(net, input_matrix);
+    disp(outputs);
     norm_output = outputs > 0.5;
     results.(netName{1}).outputs = outputs;
     results.(netName{1}).norm_outputs = norm_output;
