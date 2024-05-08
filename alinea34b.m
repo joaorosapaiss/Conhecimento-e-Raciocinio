@@ -56,6 +56,9 @@ for k = 1:numberOfRuns
     TTargets = targets(:, tr.testInd);
 
     out = sim(net, TInput);
+    out = mapminmax(output,0,1);
+    out = (out >= 0.5);
+
 
     erro = perform(net, out, TTargets);
     testAccuracy = (1-erro) * 100;

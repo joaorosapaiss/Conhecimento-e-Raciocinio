@@ -19,7 +19,8 @@ net = train(net, input_matrix, target);
 % Visualizar a rede neural
 %view(net)
 out = sim(net, input_matrix);
-
+out = mapminmax(output,0,1);
+out = (out >= 0.5);
 
 
 erro = perform(net, out, target); 
