@@ -9,11 +9,6 @@ data = readtable(filename, 'Delimiter', delimiter, 'Format', formatSpec);
 complete_data = data(~any(ismissing(data), 2), :);
 incomplete_data = data(any(ismissing(data), 2), :);
 
-% Definir o threshold para a função retrieve
-%threshold = 0.9;
-
-%disp(incomplete_data);
-
 % Aplicar retrieve
 for i = 1:height(incomplete_data)
     new_case.gender = incomplete_data.gender(i);
@@ -51,4 +46,4 @@ writetable(combined_data, 'dataset\Train_filled.csv', 'Delimiter', ';');
 
 % Imprimir o dataset combinado após as alterações
 %disp(combined_data);
-disp(incomplete_data);
+%disp(incomplete_data);

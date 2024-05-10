@@ -28,20 +28,14 @@ results = struct();
 for netName = fieldnames(nets)'
     net = nets.(netName{1});
     outputs = sim(net, input_matrix);
-    % disp(outputs);
     norm_output = mapminmax(outputs,0,1);
     norm_output = norm_output > 0.5;
+    
     results.(netName{1}).outputs = outputs;
     results.(netName{1}).norm_outputs = norm_output;
     results.(netName{1}).accuracy = sum(norm_output == targets) / length(targets) * 100;
     results.(netName{1}).comparisons = [norm_output; targets; norm_output == targets];
 end
-
-% for netName = fieldnames(results)'
-%     fprintf('\n%s: Precisão = %.2f%%\n', netName{1}, results.(netName{1}).accuracy);
-%     fprintf('Output - Target - Correto\n');
-%     disp(results.(netName{1}).comparisons');
-% end
 
 for netName = fieldnames(results)'
     fprintf('\n%s: Precisão = %.2f%%\n', netName{1}, results.(netName{1}).accuracy);

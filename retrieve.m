@@ -6,8 +6,6 @@ function [most_similar_index, highest_similarity] = retrieve(case_library, new_c
     
     max_values = get_max_values(case_library);
     
-    %retrieved_indexes = [];
-    %similarities = [];
     highest_similarity = -1; 
     most_similar_index = -1;
 
@@ -56,7 +54,6 @@ function [most_similar_index, highest_similarity] = retrieve(case_library, new_c
         
         if isfield(new_case, 'smoking_status')
             distances(1, 9) = calculate_local_distance(smoking_type_sim,case_library{i,'smoking_status'}, new_case.smoking_status);
-            %distances(1, 9) = calculate_linear_distance(case_library{i, 'smoking_status'} / max_values('smoking_status'), new_case.smoking_status / max_values('smoking_status'));
         end
        
         DG = (distances * weighting_factors')/sum(weighting_factors);                     
