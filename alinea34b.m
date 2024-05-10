@@ -94,4 +94,4 @@ nextIndex = length(files) + 1;
 net = bestNet;
 % Salvar cada rede treinada com um índice único
 filename = sprintf('redes/network_%d.mat', nextIndex);
-% save(filename, 'net', 'bestGlobalAccuracy', 'bestTestAccuracy', 'bestTrainTime', 'bestTestTime');
+save(filename, 'net', 'bestGlobalAccuracy', 'bestTestAccuracy', 'bestTrainTime', 'bestTestTime');

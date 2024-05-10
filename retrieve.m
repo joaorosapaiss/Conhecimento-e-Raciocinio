@@ -1,6 +1,6 @@
 function [most_similar_index, highest_similarity] = retrieve(case_library, new_case)
 
-    weighting_factors = [0.2 0.3 0.6 0.8 0.4 0.3 0.6 0.7 0.8]; 
+    weighting_factors = [0.2 0.8 0.7 0.7 0.2 0.2 0.6 0.5 0.6]; 
     
     smoking_type_sim = get_smoking_status_similarities();
     
@@ -11,7 +11,7 @@ function [most_similar_index, highest_similarity] = retrieve(case_library, new_c
     highest_similarity = -1; 
     most_similar_index = -1;
 
-    lista = {'gender', 'age', 'hypertension','heart_disease' ,'ever_married', 'Residence_type', 'avg_glucose_level','bmi', 'smoking_status'}
+    lista = {'gender', 'age', 'hypertension','heart_disease' ,'ever_married', 'Residence_type', 'avg_glucose_level','bmi', 'smoking_status'};
     for i = 1:length(lista)
         if ~isfield(new_case, lista{i})
             weighting_factors(i) = 0;
