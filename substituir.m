@@ -1,11 +1,10 @@
-% Supondo que os dados possam ter um delimitador específico como ';' e tratando dados ausentes
 filename = 'dataset/Train.csv';
 delimiter = ';';
 formatSpec = '%f %f %f %f %f %f %f %f %f %f %f ';
 
 data = readtable(filename, 'Delimiter', delimiter, 'Format', formatSpec);
 
-% Separar os dados completos e os dados com valores faltantes (NA)
+% Separar os dados completos e os dados com valores em falta (NA)
 complete_data = data(~any(ismissing(data), 2), :);
 incomplete_data = data(any(ismissing(data), 2), :);
 
