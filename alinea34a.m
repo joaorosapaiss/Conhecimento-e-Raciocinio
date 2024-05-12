@@ -16,16 +16,14 @@ net.divideFcn = 'dividetrain';
 net = train(net, input_matrix, target);
 
 % Visualizar a rede neural
-%view(net)
 out = sim(net, input_matrix);
 out_norm = mapminmax(out, 0, 1);
 out_norm = out_norm >= 0.5;
 
 
-erro = perform(net, out, target); 
+erro = perform(net, target, out); 
 fprintf("Erro %f\n",erro);
 fprintf("Precisao %f\n", (1-erro) * 100)
 tempo_execucao = toc;
 fprintf("Tempo de execução: %f segundos\n", tempo_execucao);
 
-%save('nn_stroke.mat','net');
