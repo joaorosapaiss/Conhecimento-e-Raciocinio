@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# Conhecimento-e-Raciocnio
-Redes Neuronais Matlab
-=======
 # Previsão de Acidente Vascular Cerebral (AVC) com Redes Neuronais
 
 ![Matlab](https://img.shields.io/badge/MATLAB-Deep_Learning-yellow)
@@ -32,15 +28,18 @@ O dataset escolhido foi o **Stroke Dataset**, que contém informações sobre pa
 
 ### 1. **Personalização de Redes Neuronais**
 Nesta secção, o utilizador pode configurar uma rede neuronal escolhendo o número de camadas, neurónios por camada, funções de ativação, e a divisão dos dados para treino, validação e teste. O sistema treina a rede e apresenta os resultados em termos de precisão.
-![Personalização de Redes](imagens/personalizacao_rede.png)
+<!--![Personalização de Redes](imagens/personalizacao_rede.png)-->
+<img alt="personalizacao" width="600px" src="imagens/personalizacao_rede.png" />
 
 ### 2. **Carregamento de Redes**
 O utilizador pode carregar redes previamente treinadas e visualizar as suas arquiteturas (número de camadas, neurónios e funções de ativação). A rede selecionada pode ser testada em novos datasets para avaliar a sua capacidade de generalização.
-![Carregar Redes](imagens/carregar_rede.png)
+<!--![Carregar Redes](imagens/carregar_rede.png)-->
+<img alt="personalizacao" width="600px"  src="imagens/carregar_rede.png" />
 
 ### 3. **Testes de Casos Específicos**
 A interface permite introduzir os atributos de um paciente específico (idade, género, etc.) e prever se o paciente está em risco de sofrer um AVC com base na rede neuronal selecionada. Esta funcionalidade permite testar a precisão das previsões em casos individuais.
-![Previsão de Casos](imagens/previsao_casos.png)
+<!--![Previsão de Casos](imagens/previsao_casos.png)-->
+<img alt="personalizacao" width="600px" src="imagens/previsao_casos.png" />
 
 <!--
 ## ⚙️ Processo de Desenvolvimento
@@ -79,5 +78,3 @@ Para mais detalhes sobre os métodos utilizados e os resultados obtidos, consult
 - [Documentação MATLAB](https://www.mathworks.com/help/matlab/)
 - [Deep Learning Toolbox](https://www.mathworks.com/products/deep-learning.html)
 
-
->>>>>>> d2248f275d7344be4956dad84e0850dff0d7d296
